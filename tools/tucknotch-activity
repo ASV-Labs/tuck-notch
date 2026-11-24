@@ -1,0 +1,78 @@
+#!/bin/bash
+# Publish activities to Tuck Notch from any script or agent running as this user.
+# Requires: Tuck Notch › Settings › Advanced › Activity feed turned on.
+#
+#   tucknotch-activity post  --id deploy-web --title "Deploy web" --state running \
+#                           [--subtitle "build 412"] [--source "Build bot"] [--progress 0.4] \
+#                           [--trailing 40%] [--priority low|normal|high] [--attention] \
+#                           [--expires 3600] [--symbol server.rack] [--action approve:Approve ...]
+#   tucknotch-activity clear --id deploy-web
+#   tucknotch-activity actions [--id deploy-web]   # print + consume button presses (JSON lines)
+#
+# States: running | done | failed | needs-input | warning | idle | online | offline
+set -euo pipefail
+
+BASE="$HOME/Library/Application Support/TuckNotch"
+INBOX="$BASE/Inbox"
+OUTBOX="$BASE/Outbox"
+
+die() { echo "tucknotch-activity: $*" >&2; exit 1; }
+
+json_str() {   # JSON-escape a string; other control characters are dropped
+  local s=$1
+  s=${s//\\/\\\\}; s=${s//\"/\\\"}
+  s=${s//$'\n'/\\n}; s=${s//$'\r'/\\r}; s=${s//$'\t'/\\t}
+  s=$(printf '%s' "$s" | LC_ALL=C tr -d '\000-\010\013\014\016-\037')
+  printf '"%s"' "$s"
+}
+
+valid_id() { [[ $1 =~ ^[A-Za-z0-9._-]{1,64}$ ]]; }
+
+cmd=${1:-}; shift || true
+case "$cmd" in
+  post)
+    id="" title="" fields="" actions=""
+    while [ $# -gt 0 ]; do
+      case "$1" in
+        --id) id=$2; shift 2 ;;
+        --title) title=$2; shift 2 ;;
+        --subtitle|--source|--state|--trailing|--priority|--symbol)
+          key=${1#--}; fields+=",\"$key\":$(json_str "$2")"; shift 2 ;;
+        --progress)
+          [[ $2 =~ ^(0(\.[0-9]+)?|1(\.0+)?|\.[0-9]+)$ ]] || die "--progress needs a number from 0 to 1"
+          fields+=",\"progress\":$2"; shift 2 ;;
+        --expires)
+          [[ $2 =~ ^[0-9]+$ ]] || die "--expires needs seconds"
+          fields+=",\"expiresIn\":$2"; shift 2 ;;
+        --attention) fields+=",\"attention\":true"; shift ;;
+        --action)
+          aid=${2%%:*}; atitle=${2#*:}
+          valid_id "$aid" || die "bad action id: $aid"
+          [ -n "$actions" ] && actions+=","
+          actions+="{\"id\":$(json_str "$aid"),\"title\":$(json_str "$atitle")}"; shift 2 ;;
+        *) die "unknown option $1" ;;
+      esac
+    done
+    valid_id "$id" || die "--id is required (letters, digits, . _ -; max 64)"
+    [ -n "$title" ] || die "--title is required"
+    [ -n "$actions" ] && fields+=",\"actions\":[$actions]"
+    mkdir -p "$INBOX"; chmod 700 "$BASE" "$INBOX" 2>/dev/null || true
+    tmp=$(mktemp "$INBOX/.tmp.XXXXXX")
+    printf '{"id":%s,"title":%s%s}\n' "$(json_str "$id")" "$(json_str "$title")" "$fields" > "$tmp"
+    mv -f "$tmp" "$INBOX/$id.json"   # atomic: Tuck Notch sees a complete file
+    ;;
+  clear)
+    [ "${1:-}" = "--id" ] && valid_id "${2:-}" || die "usage: clear --id <id>"
+    rm -f "$INBOX/$2.json"
+    ;;
+  actions)
+    filter=""
+    [ "${1:-}" = "--id" ] && { valid_id "${2:-}" || die "bad id"; filter=$2; }
+    shopt -s nullglob
+    for f in "$OUTBOX"/${filter:+$filter-}*.json; do
+      cat "$f"; echo; rm -f "$f"
+    done
+    ;;
+  *)
+    sed -n '2,15p' "$0"; exit 1 ;;
+esac

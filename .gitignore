@@ -1,0 +1,11 @@
+build/
+.build/
+.swiftpm/
+.DS_Store
+verify-*.log
+snapshots/
+snapshots.log
+check.log
+# local helper scripts and scratch
+*.local.command
+.local/

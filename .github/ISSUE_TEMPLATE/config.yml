@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Ideas and questions
+    url: https://github.com/ASV-Labs/tuck-notch/discussions
+    about: Not sure it's a feature request yet? Start a discussion in Ideas or Q&A.
+  - name: Report a security vulnerability
+    url: https://github.com/ASV-Labs/tuck-notch/security/advisories/new
+    about: Please report security problems privately.

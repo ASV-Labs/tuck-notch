@@ -1,0 +1,51 @@
+name: Feature request
+description: Suggest something Tuck Notch should do.
+title: "[Feature] "
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the idea! Please search [existing requests](https://github.com/ASV-Labs/tuck-notch/issues?q=label%3Aenhancement) first. If one exists, add a 👍 to it instead; we use reactions to decide what to build next.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What do you want to do?
+      description: Describe the situation, not the solution. "When I'm on a call I want to…"
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: How could Tuck Notch help?
+      description: What would you expect to see in the notch, the island or Settings?
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Live activities (beside the notch)
+        - Media
+        - Home cards
+        - Calendar / Notes
+        - Shelf / Clipboard
+        - Focus timer
+        - Appearance / Settings
+        - Integrations (Notion, agents, scripts)
+        - Something new
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: What do you do today instead?
+      description: Other apps, workarounds, or "nothing".
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Checks
+      options:
+        - label: I searched existing issues and didn't find this.
+          required: true

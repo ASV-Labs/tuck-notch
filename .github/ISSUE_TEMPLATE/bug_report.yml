@@ -1,0 +1,45 @@
+name: Bug report
+description: Something in Tuck Notch isn't working.
+title: "[Bug] "
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Found a security problem? Please don't file it here; use **Security › Report a vulnerability** instead.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What you did, what you expected, and what happened instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open the island with ⌃⌥K
+        2. …
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Tuck Notch version
+      description: Settings › General › About
+      placeholder: "0.6.0"
+    validations:
+      required: true
+  - type: input
+    id: macos
+    attributes:
+      label: macOS version and Mac model
+      placeholder: "macOS 15.2, MacBook Pro 14-inch (M3)"
+    validations:
+      required: true
+  - type: textarea
+    id: extra
+    attributes:
+      label: Screenshots or logs
+      description: Please remove anything personal (calendar events, clipboard text, file names) before posting.

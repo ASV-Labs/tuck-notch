@@ -1,0 +1,21 @@
+Tuck Notch
+Copyright 2026 ASV Labs LLC
+
+This product includes software developed by ASV Labs LLC.
+
+If you redistribute Tuck Notch or a work derived from it, Section 4(d) of the
+Apache License 2.0 requires you to include this NOTICE file (or its attribution
+notices) with your distribution.
+
+The Tuck Notch logo and app icon artwork (Resources/Logo.png, Resources/AppIcon.png,
+Resources/AppIcon.icns) are copyright ASV Labs LLC, all rights reserved, and are
+excluded from the Apache License 2.0 that covers the rest of this repository. They may
+be kept unmodified in copies of this repository; derived apps must use their own
+icon and name. Section 6 of the Apache License grants no permission to use ASV Labs
+trade names, trademarks or logos except to describe the origin of the work.
+
+Third-party services used at runtime (opt-in, not bundled):
+  - Open-Meteo (https://open-meteo.com) for weather forecasts and city search
+    (the free API is for non-commercial use)
+  - LRCLIB (https://lrclib.net) for synced lyrics
+  - Notion API (https://developers.notion.com) for calendar items, if connected
