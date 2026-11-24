@@ -25,7 +25,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         services.anyPanelOpen = { [weak self] in
             self?.controllers.contains { $0.viewModel.isOpen } ?? false
         }
-        services.start()
+        if !DemoTour.isActive { services.start() }
 
         buildStatusItem()
         rebuildWindows()
@@ -76,7 +76,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             .sink { [weak self] on in Task { @MainActor in if on { self?.closeAll() } } }
             .store(in: &cancellables)
 
-        if !settings.hasOnboarded, let primary = primaryController {
+        if DemoTour.isActive, let primary = primaryController {
+            DemoTour.start(services: services, primary: primary,
+                           openSettings: { [weak self] pane in self?.openSettings(pane: pane) },
+                           settingsWindow: { [weak self] in self?.settingsController?.window })
+        } else if !settings.hasOnboarded, let primary = primaryController {
             primary.viewModel.showOnboarding = true
             primary.viewModel.expand(tab: .home, focus: false)
         }

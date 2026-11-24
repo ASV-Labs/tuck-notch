@@ -322,7 +322,7 @@ struct ActivityRow: View {
 
 /// Hover state: the current activities and one-tap controls, without the full dashboard.
 struct PeekView: View {
-    static let height: CGFloat = 132
+    static let height: CGFloat = 92
 
     @ObservedObject var vm: NotchViewModel
     @EnvironmentObject private var engine: ActivityEngine

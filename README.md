@@ -1,13 +1,56 @@
 <p align="center">
-  <img src="Resources/Logo.png" width="420" alt="Tuck Notch">
+  <img src="docs/images/hero.jpg" alt="Tuck Notch: the expanded island under a MacBook notch, showing music, weather, calendar and to-dos">
 </p>
-
-<h1 align="center">Tuck Notch</h1>
 
 <p align="center">
-  A native, privacy-first activity center for the MacBook notch.<br>
+  <a href="https://github.com/ASV-Labs/tuck-notch/releases/latest"><img src="https://img.shields.io/github/v/release/ASV-Labs/tuck-notch?label=download&color=7c5cff" alt="Latest release"></a>
+  <img src="https://img.shields.io/badge/macOS-13%2B-black?logo=apple" alt="macOS 13 or later">
+  <img src="https://img.shields.io/badge/notarized-Apple-black" alt="Notarized by Apple">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-blue" alt="Apache 2.0 license"></a>
+</p>
+
+<h3 align="center">Your MacBook notch, put to work.</h3>
+
+<p align="center">
+  A native, privacy-first activity center that grows out of the camera housing.<br>
   Invisible when nothing's happening. Informative at a glance. Actionable when you need it.
 </p>
+
+<p align="center">
+  <a href="https://github.com/ASV-Labs/tuck-notch/releases/latest"><b>⬇︎ Download the latest release</b></a> &nbsp;·&nbsp;
+  <a href="#what-it-does">Features</a> &nbsp;·&nbsp;
+  <a href="#privacy">Privacy</a> &nbsp;·&nbsp;
+  <a href="https://github.com/ASV-Labs/tuck-notch/issues/new?template=feature_request.yml">Request a feature</a>
+</p>
+
+Free and open source. Signed by ASV Labs, notarized by Apple, and it updates itself.
+
+## A look around
+
+<table>
+  <tr>
+    <td width="50%"><img src="docs/images/live.jpg" alt="Closed notch with album art and an equalizer beside the camera"><br><b>Lives around the notch.</b> Closed, it shows what's playing and what's running.</td>
+    <td width="50%"><img src="docs/images/peek.jpg" alt="Peek panel with media controls and quick buttons"><br><b>Peek without opening.</b> Hover for media controls and one-tap shelf, clipboard, mic, keep-awake and present mode.</td>
+  </tr>
+  <tr>
+    <td><img src="docs/images/media.jpg" alt="Media tab with artwork, progress and volume"><br><b>Control what's playing.</b> Apple Music, Spotify, and YouTube or SoundCloud in your browser.</td>
+    <td><img src="docs/images/calendar.jpg" alt="Calendar tab with agenda, Join buttons and month grid"><br><b>Never miss the call.</b> The next three days, a month grid, one-click Join.</td>
+  </tr>
+  <tr>
+    <td><img src="docs/images/shelf.jpg" alt="File shelf holding three files"><br><b>A shelf for your files.</b> Drop files on the notch, drag them out later.</td>
+    <td><img src="docs/images/clipboard.jpg" alt="Clipboard history list"><br><b>Clipboard history.</b> Search, pin and paste back what you copied.</td>
+  </tr>
+  <tr>
+    <td><img src="docs/images/activity.jpg" alt="Activity tab with media, timer, download and agent progress"><br><b>One place for what's running.</b> Downloads, timers, media, scripts and AI agents.</td>
+    <td><img src="docs/images/attention.jpg" alt="Alert asking to approve a deploy, with Approve and Reject buttons"><br><b>Your agents can ask first.</b> Alerts with buttons that never steal focus.</td>
+  </tr>
+  <tr>
+    <td><img src="docs/images/glass.jpg" alt="Island at 55 percent opacity with the wallpaper showing through"><br><b>See-through when you want it.</b> Turn the opacity down; frosted glass optional.</td>
+    <td><img src="docs/images/notes.jpg" alt="To-dos and notes tab"><br><b>Jot it down.</b> A checklist and a scratchpad, saved on your Mac.</td>
+  </tr>
+</table>
+
+<sub>Screenshots are of the real app running with sample content.</sub>
 
 ## What it does
 
@@ -79,9 +122,10 @@ Details: [SECURITY.md](SECURITY.md).
 swift build && swift test
 ./verify.command        # build + tests + launch + idle CPU/memory/energy log
 ./snapshots.command     # render every island state to snapshots/*.png
+./demo-tour.command     # run the real app with sample content and capture each state to demo-captures/
 ```
 
-The snapshot renderer uses your real settings (for example a pinned clipboard item or your weather city). Look at every image before you share it.
+The snapshot renderer uses your real settings (for example a pinned clipboard item or your weather city). Look at every image before you share it. The demo tour uses throwaway settings and fictional content only, and `tools/marketing/compose.py` turns its captures into the images in `docs/images/`.
 
 Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md). Maintainers: [RELEASING.md](RELEASING.md). Other docs: [UX-DESIGN-SYSTEM.md](UX-DESIGN-SYSTEM.md) · [TEST-PLAN.md](TEST-PLAN.md) · [ROADMAP.md](ROADMAP.md) · [KNOWN-ISSUES.md](KNOWN-ISSUES.md) · [CHANGELOG.md](CHANGELOG.md)
 
@@ -89,4 +133,4 @@ Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md). Maintainers: 
 
 The source code is licensed under the [Apache License 2.0](LICENSE) © 2026 ASV Labs LLC. Redistributions must keep the [NOTICE](NOTICE) file, which credits ASV Labs.
 
-The artwork files `Resources/Logo.png`, `Resources/AppIcon.png` and `Resources/AppIcon.icns` are **not** covered by the Apache License: they are © ASV Labs LLC, all rights reserved. You may keep them unmodified in copies of this repository; to ship a modified or derived app, replace them with your own icon and use a different name. The "Tuck Notch" name is not licensed for other products.
+The artwork files `Resources/Logo.png`, `Resources/AppIcon.png` and `Resources/AppIcon.icns` are **not** covered by the Apache License: they are © ASV Labs LLC, all rights reserved. You may keep them unmodified in copies of this repository; to ship a modified or derived app, replace them with your own icon and use a different name. The screenshots and marketing images in `docs/images/` are © ASV Labs LLC as well. The "Tuck Notch" name is not licensed for other products.

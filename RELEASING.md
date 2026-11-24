@@ -21,7 +21,8 @@ Releases are DMGs signed with ASV Labs' Developer ID, notarized by Apple and pub
 
 1. Bump `CFBundleShortVersionString` and `CFBundleVersion` in `Resources/Info.plist`.
 2. Add a `## <version> (<date>)` section to `CHANGELOG.md`; it becomes the release notes.
-3. Commit and push to `main`.
-4. Run `./release.sh` (or `./release.sh --dry-run` to stop before publishing).
+3. If the UI changed, refresh the screenshots: `./demo-tour.command`, then `python3 tools/marketing/compose.py demo-captures out Resources/AppIcon.png` and copy the images you need into `docs/images/` (README images are 1200×675 JPEGs, the hero 1600×900).
+4. Commit and push to `main`.
+5. Run `./release.sh` (or `./release.sh --dry-run` to stop before publishing).
 
 The script signs Sparkle's helpers and the app with the hardened runtime, notarizes and staples the app, builds and notarizes the DMG, signs it for Sparkle, writes `appcast.xml`, and creates the GitHub release with both files attached.

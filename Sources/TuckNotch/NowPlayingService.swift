@@ -274,6 +274,7 @@ final class NowPlayingService: ObservableObject {
 
     /// `force` bypasses the idle back-off (player notifications, user commands, panel opening).
     func poll(force: Bool = false) {
+        if previewLocked { return }
         if panelOpen && !isDraggingVolume { refreshVolume() }
         let running = runningProviders()
         guard !running.isEmpty else {
@@ -312,6 +313,7 @@ final class NowPlayingService: ObservableObject {
             Task { @MainActor in
                 guard let self else { return }
                 self.pollInFlight = false
+                if self.previewLocked { return }
                 self.permissionDenied = deniedFinal && pickedSnapshot == nil
                 if self.browsersNeedingSetup.map(\.id) != needSetupFinal.map(\.id) {
                     self.browsersNeedingSetup = needSetupFinal
@@ -417,7 +419,12 @@ final class NowPlayingService: ObservableObject {
     }
 
     /// Used only by the snapshot renderer to show sample content.
+    /// Set by the demo tour: freezes the seeded preview so live polling can't replace it.
+    var previewLocked = false
+
     func applyPreview(track: Track, playing: Bool, position: Double, artwork: NSImage?) {
+        previewLocked = true
+        self.volume = 62
         self.track = track
         self.isPlaying = playing
         self.position = position

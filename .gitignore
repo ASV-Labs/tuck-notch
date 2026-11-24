@@ -9,3 +9,4 @@ check.log
 # local helper scripts and scratch
 *.local.command
 .local/
+demo-captures/

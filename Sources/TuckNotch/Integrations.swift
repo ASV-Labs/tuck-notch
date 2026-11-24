@@ -64,6 +64,7 @@ final class CalendarService: ObservableObject {
     }
 
     func refreshAccess() {
+        if previewLocked { return }
         guard AppSettings.shared.calendarEnabled else { access = .notConnected; return }
         switch EKEventStore.authorizationStatus(for: .event) {
         case .notDetermined: access = .notDetermined
@@ -93,6 +94,17 @@ final class CalendarService: ObservableObject {
         }
     }
 
+    /// Set by the demo tour: freezes the seeded preview so EventKit reloads can't replace it.
+    var previewLocked = false
+
+    /// Sample content for snapshot renders and the demo tour (never used in normal runs).
+    func applyPreview(events: [Event], busyDays: Set<Int>) {
+        previewLocked = true
+        access = .granted
+        self.events = events
+        self.busyDays = busyDays
+    }
+
     /// Opens System Settings › Internet Accounts, where a Google account can be added for free.
     /// Once added with Calendars turned on, its events show up through EventKit automatically.
     func openInternetAccounts() {
@@ -104,6 +116,7 @@ final class CalendarService: ObservableObject {
     }
 
     func reload() {
+        if previewLocked { return }
         refreshAccess()
         guard access == .granted else { events = []; accountNames = []; busyDays = []; return }
         let names = Set(store.calendars(for: .event).compactMap { $0.source?.title }).sorted()
@@ -240,6 +253,7 @@ final class WeatherService: ObservableObject {
     }
 
     func refresh() {
+        if previewLocked { return }
         let s = AppSettings.shared
         guard isConfigured else { current = nil; return }
         guard let url = Self.forecastURL(latitude: s.weatherLatitude, longitude: s.weatherLongitude,
@@ -363,6 +377,18 @@ final class WeatherService: ObservableObject {
         s.weatherEnabled = false
         s.weatherPlace = ""
         current = nil
+    }
+
+    /// Sample content for snapshot renders and the demo tour (never used in normal runs).
+    /// Set by the demo tour: freezes the seeded preview so network refreshes can't replace it.
+    var previewLocked = false
+
+    func applyPreview(placeLabel: String, current: Current) {
+        previewLocked = true
+        let s = AppSettings.shared
+        s.weatherEnabled = true
+        s.weatherPlace = placeLabel
+        self.current = current
     }
 
     func choose(_ place: Place) {

@@ -17,6 +17,7 @@ swift test             # unit tests
 ./build.sh install     # copy to /Applications and launch
 ./verify.command       # build + tests + launch + 60 s idle CPU/memory/energy log
 ./snapshots.command    # render every island state to snapshots/*.png
+./demo-tour.command    # capture the real app with fictional sample content to demo-captures/
 ```
 
 Requires macOS 13+ and Xcode (or the Command Line Tools).

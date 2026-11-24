@@ -5,7 +5,12 @@ enum TuckNotchMain {
     @MainActor
     static func main() {
         let args = CommandLine.arguments
-        if !args.contains("--render-snapshots") { LegacyMigration.run() }
+        if !args.contains("--render-snapshots") && !args.contains("--demo-tour") { LegacyMigration.run() }
+        if let i = args.firstIndex(of: "--demo-tour"), i + 1 < args.count {
+            AppDefaults.enterSnapshotMode()
+            DemoTour.outputDir = URL(fileURLWithPath: args[i + 1])
+            DemoTour.prepareSettings()
+        }
         if let i = args.firstIndex(of: "--render-snapshots"), i + 1 < args.count {
             AppDefaults.enterSnapshotMode()
             _ = NSApplication.shared

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.6.1 (2026-11-24)
+- The hover (peek) panel is shorter: the empty strip under its buttons is gone.
+- New README with screenshots of every view.
+- For contributors: `./demo-tour.command` runs the app with fictional sample content and throwaway settings and captures each state with transparency; `tools/marketing/compose.py` builds the README and social images from those captures.
+
+
 ## 0.6.0 (2026-11-24)
 First public release.
 - **Signed, notarized download:** Tuck Notch ships as a DMG signed with ASV Labs' Developer ID and notarized by Apple.
