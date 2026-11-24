@@ -97,7 +97,7 @@ if [ "$DRY_RUN" = "--dry-run" ]; then
   exit 0
 fi
 
-echo "→ Publishing GitHub release v$VERSION…"
+echo "→ Publishing GitHub release v${VERSION}…"
 gh release create "v$VERSION" "$DMG" "$OUT/appcast.xml" \
   --repo "$REPO" --target main --title "Tuck Notch $VERSION" --notes-file "$OUT/notes.md"
 echo "✓ Released: https://github.com/$REPO/releases/tag/v$VERSION"
